@@ -1,0 +1,21 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">Сите категории</h2>
+    <div class="container">
+    <div class="row">
+        {% for category in categories %}
+        <div class="col-md-3 mb-5">
+            <a href="{% url 'category' category.id %}" class="btn w-100 h-100 text-light" style="background-color: #32597A;">{{ category.name }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}

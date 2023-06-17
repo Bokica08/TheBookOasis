@@ -1,0 +1,41 @@
+
+{% extends 'nav.html' %}
+
+{% block title %}
+    {{ category.name }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">{{ category.name }}</h2>
+
+<div class="container">
+    <div class="row">
+        {% if books %}
+            {% for book in books %}
+                <div class="col-md-3 mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{ book.photo.url }}" style="height: 350px" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.name }}</h5>
+                            <p class="card-text">Категорија: {{ book.category }}</p>
+                            <p class="card-text">Автор: {{ book.author }}</p>
+                            <p class="card-text">Достапни примероци: {{ book.quantity }}</p>
+                            <a href="{% url 'book_details' book.id %}" class="btn text-light p-2 me-3" style="background-color: #32597A; width: 100px">Детали</a>
+                                {% if user.is_authenticated and user.is_superuser %}
+                            <a href="{% url 'update_quantity' book.id %}" class="btn text-light" style="background-color: #32597A; width: 120px">Ажурирај количина</a>
+                       {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <p>No books available in the {{ category }} category.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

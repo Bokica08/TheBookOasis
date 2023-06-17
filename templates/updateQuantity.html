@@ -1,0 +1,36 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Update Quantity
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">Ажурирај количина</h2>
+<div class="container mb-5">
+ {% if user.is_authenticated and user.is_superuser %}
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ MEDIA_URL }}{{book.photo.url }}" class="img-fluid" style="width: 400px">
+        </div>
+        <div class="col-md-6">
+            <h3 class="mb-5">{{ book.name }}</h3>
+            <form method="post" action="{% url 'update_quantity' book.id %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+<div class="form-group">
+    <label for="{{ form.quantity.id_for_label }}">Нова количина</label>
+    <input type="number" name="quantity" class="form-control mt-3" min="0" step="1" value="{{ book.quantity }}" required>
+</div>
+                <button class="btn text-white mt-3" style="background-color: #32597A; width: 120px" type="submit">Ажурирај</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+        <h1 class="text-center">Не може да менувате количина</h1>
+
+{% endif %}
+</div>
+{% endblock %}

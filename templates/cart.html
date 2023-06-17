@@ -1,0 +1,55 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Cart
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">Кошничка</h2>
+    <div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Книга</th>
+      <th scope="col">Цена</th>
+      <th scope="col">Количина</th>
+        <th scope="col">Вкупно</th>
+                <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in items %}
+    <tr>
+      <th scope="row">1</th>
+      <td>{{  item.book.name}}</td>
+      <td>{{item.book.price}}</td>
+      <td>{{  item.quantity}}</td>
+        <td>{{ item.subtotal}}</td>
+            <td>
+                <form action="{% url 'deleteFromCart' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-danger" type="submit">Избриши</button>
+                </form>
+            </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+        <div class="row">
+                        {% if total != 0 %}
+        <div class="w-25">
+
+    <a class="btn text-white p-2" style="background-color: #32597A" href="{% url 'deliveryInfo' %}">Нарачај</a>
+
+        </div>
+                {% endif %}
+    <div class="col d-flex justify-content-end">
+        <h5>Вкупно за напалта: {{total}}</h5>
+    </div>
+</div>
+    </div>
+{% endblock %}

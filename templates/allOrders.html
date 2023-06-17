@@ -1,0 +1,54 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    All Orders
+{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+    </div>
+    <h2 class="mt-5 mb-5 text-center">Сите нарачки</h2>
+{% if user.is_authenticated and user.is_superuser %}
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Корисник</th>
+                    <th scope="col">Нарачка</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Датум</th>
+                    <th scope="col">Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                    <td>{{ order.user }}</td>
+                        <td>
+                            {% for item in order.cart.shoppingcartitem_set.all %}
+                                {{ item.book.name }} x {{ item.quantity }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{ order.total }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.get_status_display }}</td>
+
+                    <td>
+                        {% if order.status != 'Deliver' %}
+                                <a href="{% url 'change_order_status' order.id %}" class="btn btn-outline-success">Процесирај</a>
+                        {% endif %}
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="container">
+            <h3 class="text-center">Немате пристап до сите нарачки</h3>
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

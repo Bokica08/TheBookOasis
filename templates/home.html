@@ -1,0 +1,40 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">Почетна</h2>
+<div class="container">
+<h3 class="mb-5 d-flex justify-content-between align-items-center" style="color: #32597A">
+    Препорачани дела
+    {% if user.is_authenticated and user.is_superuser %}
+        <a href="/addBook" class="btn text-light p-2 me-4" style="background-color: #32597A; width: 200px">Додади книга</a>
+    {% endif %}
+</h3>
+
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-3 mb-5">
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top img-fluid" src="{{ MEDIA_URL }}{{book.photo.url  }}" style="height: 350px" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ book.name}}</h5>
+    <p class="card-text">Категорија: {{ book.category }}</p>
+          <p class="card-text">Автор: {{ book.author }}</p>
+          <p class="card-text">Достапни примероци: {{ book.quantity }}</p>
+    <a href="{% url 'book_details' book.id %}" class="btn text-light p-2 me-3" style="background-color: #32597A; width: 100px">Детали</a>
+          {% if user.is_authenticated and user.is_superuser %}
+          <a href="{% url 'update_quantity' book.id %}" class="btn text-light" style="background-color: #32597A; width: 120px">Ажурирај количина</a>
+        {% endif %}
+  </div>
+</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

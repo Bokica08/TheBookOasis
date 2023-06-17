@@ -1,0 +1,38 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    My Orders
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+    </div>
+    <h2 class="mt-5 mb-5 text-center">Мои нарачки</h2>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Нарачка</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Датум</th>
+                    <th scope="col">Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>
+                            {% for item in order.cart.shoppingcartitem_set.all %}
+                                {{ item.book.name }} x {{ item.quantity }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{ order.total }}</td>
+                    <td>{{ order.date }}</td>ќ
+                        <td>{{ order.get_status_display  }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

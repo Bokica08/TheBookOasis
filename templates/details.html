@@ -1,0 +1,60 @@
+{% extends 'nav.html' %}
+
+{% block title %}
+    Details
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h1 class="text-center" style="color: #32597A">The Book Oasis</h1>
+</div>
+<h2 class="mt-5 mb-5 text-center">Детали за книга</h2>
+    <div class="container mb-5">
+    <div class="row">
+        <img src="{{ MEDIA_URL }}{{book.photo.url }}" class="img-fluid" style="width: 400px">
+        <div class="col">
+        <h3>{{ book.name }}</h3>
+        <h3>Категорија: {{ book.category }}</h3>
+        <h3>Опис</h3>
+        <p style="color: #32597A">{{ book.details }}</p>
+        <h3>Автор: {{ book.author }}</h3>
+            <h3>Детали за авторот</h3>
+            <p style="color: #32597A">{{ book.author.details }}</p>
+        <h3>Цена: {{ book.price }}</h3>
+            <h3>Достапни примероци: {{ book.quantity }}</h3>
+                            {% if user.is_authenticated and not user.is_superuser %}
+                                {% if book.quantity > 0 %}
+                                    {% if not isInShoppingCart%}
+                        <form method="POST" class="d-flex justify-content-right" action="{% url 'add_to_cart' book.id %}">
+                          {% csrf_token %}
+                          <label for="quantity" class="text-bold">Количина: </label>
+                          <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-25 d-inline">
+
+                          <button type="submit" class="btn text-white ms-3" style="background-color: #32597A">Додади во кошничка</button>
+                        </form>
+                                        {% else %}
+
+                                        <div class="alert alert-success" role="alert">
+    Книгата е веќе во вашата кошничка!
+</div>
+
+                                        {% endif %}
+
+                                {% else %}
+                                        <div class="alert alert-danger" role="alert">
+    Нема достапни примероци од оваа книга!
+
+                    {% endif %}
+                                                {% else %}
+ <div class="alert alert-primary" role="alert">
+  Не сте најавени како корисник. Најавете се за да може да додавате книги во кошничката!
+</div>
+        {% endif %}
+    </div>
+
+            </div>
+
+    </div>
+    </div>
+
+{% endblock %}

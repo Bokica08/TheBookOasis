@@ -1,0 +1,32 @@
+
+{% extends 'nav.html' %}
+
+{% block title %}
+    Welcome
+{% endblock %}
+
+{% block content %}
+    {% if not user.is_authenticated %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col d-flex justify-content-center" style="height: 600px">
+            <div>
+                <img class="img-fluid h-25" style="display: block; margin-left: auto; margin-right: auto;" src="https://www.huellalegal.com/wp-content/uploads/2022/01/tfgtfm.png" alt="Blue Book Png, Transparent Png@kindpng.com">
+                <h1 class="mt-2 bold text-center">Добредојдовте</h1>
+                <a class="btn p-3 me-2 mt-3 text-light" style="background-color: #32597A; width: 150px" href="/books/">Сите Книги</a>
+                <a class="btn p-3 ms-2 mt-3 text-light" style="background-color: #32597A; width: 150px" href="/categories">Сите Категории</a>
+                <br>
+                <a class="btn p-3 me-2 mt-3 text-light" style="background-color: #32597A; width: 150px" href="/login/">Најави се</a>
+                <a class="btn p-3 ms-2 mt-3 text-light" style="background-color: #32597A; width: 150px" href="/adminLogin/">Админ Најава</a>
+                <br>
+                <h3 class="m-3 text-center">Немаш Профил?</h3>
+                <br>
+                <div class="d-flex justify-content-center">
+                    <a class="btn p-3 text-light" style="background-color: #32597A; width: 150px" href="/register">Регистрирај се</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% endif %}
+{% endblock %}
