@@ -27,11 +27,12 @@
                                     {% if not isInShoppingCart%}
                         <form method="POST" class="d-flex justify-content-right" action="{% url 'add_to_cart' book.id %}">
                           {% csrf_token %}
-                          <label for="quantity" class="text-bold">Количина: </label>
+                          <label for="quantity" class="text-bold me-3"><h4>Количина: </h4></label>
                           <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control w-25 d-inline">
 
                           <button type="submit" class="btn text-white ms-3" style="background-color: #32597A">Додади во кошничка</button>
                         </form>
+
                                         {% else %}
 
                                         <div class="alert alert-success" role="alert">
@@ -55,6 +56,15 @@
             </div>
 
     </div>
+        {% if messages %}
+        <div class="container mt-5">
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     </div>
 
 {% endblock %}

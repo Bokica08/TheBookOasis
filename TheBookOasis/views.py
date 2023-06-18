@@ -101,6 +101,7 @@ def add_to_cart(request, pk):
     book = get_object_or_404(Book, pk=pk)
     quantity = request.POST.get('quantity')
     if book.quantity < int(quantity):
+        messages.error(request, 'Нема '+quantity+' примероци на залиха')
         return render(request, 'details.html', {'book': book, 'quantity': quantity})
     else:
         item = ShoppingCartItem(book=book, quantity=quantity, shoppingCart=ShoppingCart.objects.all().filter(
@@ -213,7 +214,6 @@ def update_quantity(request, book_id):
         form = UpdateQuantityForm(request.POST)
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
-            # Update the quantity of the book
             book.quantity = quantity
             book.save()
             return redirect('book_details', book_id=book.id)

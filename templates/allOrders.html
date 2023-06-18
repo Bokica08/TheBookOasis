@@ -15,6 +15,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Корисник</th>
                     <th scope="col">Нарачка</th>
                     <th scope="col">Цена</th>
@@ -25,7 +26,9 @@
             </thead>
             <tbody>
                 {% for order in orders %}
+                {% with forloop.counter as row_number %}
                     <tr>
+                          <th scope="row">{{ row_number }}</th>
                     <td>{{ order.user }}</td>
                         <td>
                             {% for item in order.cart.shoppingcartitem_set.all %}
@@ -42,6 +45,7 @@
                         {% endif %}
                     </td>
                     </tr>
+                {% endwith %}
                 {% endfor %}
             </tbody>
         </table>

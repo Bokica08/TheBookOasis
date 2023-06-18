@@ -23,8 +23,10 @@
   </thead>
   <tbody>
   {% for item in items %}
+ {% with forloop.counter as row_number %}
+
     <tr>
-      <th scope="row">1</th>
+      <th scope="row">{{ row_number }}</th>
       <td>{{  item.book.name}}</td>
       <td>{{item.book.price}}</td>
       <td>{{  item.quantity}}</td>
@@ -36,6 +38,7 @@
                 </form>
             </td>
     </tr>
+      {% endwith %}
     {% endfor %}
   </tbody>
 </table>
